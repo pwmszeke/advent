@@ -3,6 +3,11 @@ def main():
     with open('input.txt', 'r') as f:
         data = f.read().splitlines()
 
+    stacks = [
+        ['T', 'Z', 'B'],
+        ['N', 'D', 'T', 'H', 'V'],
+
+    ]
     total = 0
     for line in data:
         both = line.split(',')
