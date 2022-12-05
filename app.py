@@ -22,9 +22,11 @@ def main():
             number_of_items = int(directions[1])
             source = int(directions[3]) - 1
             destination = int(directions[5]) - 1
+            new_list = []
             for num in range(int(number_of_items)):
-                stacks[destination].insert(0,stacks[source][0])
+                new_list.append(stacks[source][0])
                 stacks[source].pop(0)
+            stacks[destination] = new_list + stacks[destination]
 
     final_str = ''
     for stack in stacks:
