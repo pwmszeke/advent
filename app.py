@@ -1,26 +1,36 @@
+import re
 
 def main():
     with open('input.txt', 'r') as f:
         data = f.read().splitlines()
 
-    stacks = [
-        ['T', 'Z', 'B'],
-        ['N', 'D', 'T', 'H', 'V'],
-
-    ]
+    stacks = [[] for _ in range(9)]
     total = 0
+    n = 4
     for line in data:
-        both = line.split(',')
-        first = list(map(int, both[0].split('-')))
-        second = list(map(int, both[1].split('-')))
-        if first[0] >= second[0]:
-            if first[1] <= second[1]:
-                total += 1
-                continue
-        if second[0] >= first[0]:
-            if second[1] <= first[1]:
-                total += 1
-    print(total)
+        chunks = [line[i:i+n] for i in range(0, len(line), n)]
+        for idx,stack in enumerate(chunks):
+            if stack.strip() != '':
+                stacks[idx].append(stack.strip().replace('[','').replace(']',''))
+        total += 1
+        if total > 7:
+            break
+
+    for line in data:
+        if line.startswith('move'):
+            directions = line.split(' ')
+            number_of_items = int(directions[1])
+            source = int(directions[3]) - 1
+            destination = int(directions[5]) - 1
+            for num in range(int(number_of_items)):
+                stacks[destination].insert(0,stacks[source][0])
+                stacks[source].pop(0)
+
+    final_str = ''
+    for stack in stacks:
+        final_str += stack[0]
+    print(final_str)
+
 
 if __name__ == '__main__':
     main()
