@@ -1,27 +1,21 @@
 
 def main():
     with open('input.txt', 'r') as f:
-        data = f.readlines()
+        data = f.read().splitlines()
 
     total = 0
-    idx = 0
-
     for line in data:
-        if idx+2 > len(data):
-            break
-        first, second, third = data[idx].strip(), data[idx+1].strip(), data[idx+2].strip()
-        common_letter = ''.join(set(first).intersection(second).intersection(third))
-        print(common_letter)
-        total += get_value(common_letter)
-        idx += 3
-
+        both = line.split(',')
+        first = list(map(int, both[0].split('-')))
+        second = list(map(int, both[1].split('-')))
+        if first[0] >= second[0]:
+            if first[1] <= second[1]:
+                total += 1
+                continue
+        if second[0] >= first[0]:
+            if second[1] <= first[1]:
+                total += 1
     print(total)
-
-def get_value(letter):
-    if letter.islower():
-        return ord(letter) - 96    
-    else:
-        return ord(letter) - 38
 
 if __name__ == '__main__':
     main()
