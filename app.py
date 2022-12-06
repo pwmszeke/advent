@@ -5,15 +5,21 @@ def main():
         data = f.read()
     
     sequence = ''
-    starting_index = 0
     for idx,letter in enumerate(data):
-        if letter in sequence:
-            sequence = ''
-        else:
-            sequence += letter
-            if len(sequence) > 3:
-                print(idx-3)
+        sequence += letter
+        if len(sequence) == 14:
+            if is_unique(sequence):
+                print(idx+1)
+            else:
+                sequence = sequence[1:]
 
+def is_unique(sequence):
+    characters = set()
+    for char in sequence:
+        if char in characters:
+            return False
+        characters.add(char)
+    return True
 
 if __name__ == '__main__':
     main()
